@@ -1,0 +1,180 @@
+# === BackUps and Uploads to SFTP Server by RHDSV
+## Create or add script and copy the following # Codes: and paste to the colomn Source:
+## Its can be used with trigger like using another scripts and or netwatch and or scheduler
+## For Using This Script Please Customize Using Your Own Params:
+## In the add script Sections:
+### 1. name="BackUps and Uploads to SFTP Server" equals to: name="your script name"
+### 2. owner=rh					 equals to: owner=your mikrotik device systems user
+## In the Variables Sections:
+### 3. backuppass "testbackuppassword" 	 	 equals to: backuppass "your backup password"
+### 4. encryptionmethod1 "aes-sha256"		 equals to: encryptionmethod1 "aes-sha256"	
+### 5. encryptionmethod2 "rc4" 		 	 equals to: encryptionmethod2 "rc4"
+### 6. sftpuser "testsftpuser"		 	 equals to: sftpuser "your sftp username"
+### 7. sftppassword "textsftppassword"	 	 equals to: sftppassword "your sftp password"
+### 8. sftpip "10.10.100.200"			 equals to: sftpip "your sftp server ip"
+### 9.a. sftpdirpath "noc/uploads"		 equals to: sftpdirpath "your directory path on sftp server without opening and closing slash"
+### 9.b. notes: if its using subdiretory in a directory just using single slash in between the directory and its sub directory
+###
+### 10. sftpport "22"				 equals to: sftpport "your sftp applications port number on the server"	
+## In the Generating Backup and Files Sections:
+#### 11. encryption=$"encryptionmethod2"	 equals to: encryption=$"encryption method you choose between encryptionmethod1 or encryptionmethod2" 
+## Thats its.
+## Please feel free to contacts or submit issue if not working or having troubles and would be welcome also if there are any questions:
+## https://rhdsv.com/contactus
+## https://github.com/ori-rhdsv
+# BackUps and Uploads to SFTP Server by RHDSV ===
+## Codes:
+
+:local systemidentityname [/system identity get name]
+:local rosversion [/system resource get version]
+:local textfile
+:local backupfile
+:local backuppass "testbackuppassword"
+:local encryptionmethod1 "aes-sha256"
+:local encryptionmethod2 "rc4"
+:local sftpuser "testsftpuser"
+:local sftppassword "textsftppassword"
+:local sftpip "10.10.100.200"
+:local sftpdirpath "noc/uploads"
+:local sftpport "22"
+:local sftplogbackup "sftplogbackup.log"
+:local sftplogtext "sftplogtext.log"
+:local backupdate [/system clock get date]
+:local uploadbackupstatus 0
+:local uploadtextstatus 0
+:log info "== Starting BackUps by RHDSV.... "
+:set textfile ($"systemidentityname" . "_" . $"backupdate" . ".rsc")
+:set backupfile ($"systemidentityname" . "_" . $"backupdate" .  ".backup")
+:local sftpuploads1 "/tool fetch upload=yes url=\"sftp://$sftpip/$sftpdirpath/$backupfile\" port=$sftpport user=$sftpuser password=$sftppassword src-path=$backupfile mode=sftp keep-result=no as-value"
+:local sftpuploads2 "/tool fetch upload=yes url=\"sftp://$sftpip/$sftpdirpath/$textfile\" port=$sftpport user=$sftpuser password=$sftppassword src-path=$textfile mode=sftp keep-result=no as-value"
+
+
+## Generating BackUp and Text Files
+:log info "Generating BackUp and Text File.... "
+:log info "RouterOS Version: $rosversion"
+:delay 2s
+:if ($rosversion~"^7.") do={
+:execute [/export compact show-sensitive file=$"textfile"]
+} else={
+:execute [/export file=$"textfile"]
+}
+:execute [/system backup save encryption=$"encryptionmethod2" password=$"backuppass" name=$"backupfile"]
+:delay 5s
+:log info "... BackUp and Text Files Created"
+:delay 2s
+
+
+## Sending Text File
+:log info "Sending Text File to SFTP Server..."
+:delay 15s
+
+:execute file=$"sftplogtext" script=$"sftpuploads2"
+:delay 30s
+:local sftplogtextresults [/file get [find name="$sftplogtext.txt"] contents]
+:delay 5s
+
+:if ($sftplogtextresults~"finished") do={
+:log info "... Text Successfully Uploaded"
+} else={
+:if ($sftplogtextresults~"^fail") do={
+:log info "... Text Upload Failed"
+:delay 2s
+:set $uploadtextstatus ($uploadtextstatus+1)
+:log info "Prepare for Re-Uploading Text File... "
+:log info $uploadtextstatus
+} else={
+:log info "... Text Successfully Uploaded"
+}}
+
+:delay 10s
+
+:while ($uploadtextstatus>0) do={
+:log info "Re-Uploading Text File..."
+:delay 30s
+:execute file=$"sftplogtext" script=$"sftpuploads2"
+:local sftplogtextresults [/file get [find name="$sftplogtext.txt"] contents]
+:delay 2s
+:if ($sftplogtextresults~"finished") do={
+:log info "... Re-Upload Text Successfully Uploaded"
+:set $uploadtextstatus ($uploadtextstatus-1)
+} 
+:if ($sftplogtextresults~"^fail") do={
+:log info "... Re-Upload Text Failed"
+:delay 2s
+:log info "Prepare for Re-Uploading Text File... "
+:log info $uploadtextstatus
+} else={
+:log info "... Re-Upload Text Successfully Uploaded"
+:set $uploadtextstatus ($uploadtextstatus-1)
+}}
+:log info "... Sending Text File Completed"
+:delay 5s
+
+
+## Sending BackUp File
+:log info "Sending BackUp File to SFTP Server..."
+:delay 15s
+
+:execute file=$"sftplogbackup" script=$"sftpuploads1"
+:delay 30s
+:local sftplogbackupresults [/file get [find name="$sftplogbackup.txt"] contents]
+:delay 5s
+
+:if ($sftplogbackupresults~"finished") do={
+:log info "... BackUp Successfully Uploaded"
+} else={
+:if ($sftplogbackupresults~"^fail") do={
+:log info "... BackUp Upload Failed"
+:delay 2s
+:set $uploadbackupstatus ($uploadbackupstatus+1)
+:log info "Prepare for Re-Uploading Backup File... "
+:log info $uploadbackupstatus
+} else={
+:log info "... BackUp Successfully Uploaded"
+}}
+
+:delay 10s
+
+:while ($uploadbackupstatus>0) do={
+:log info "Re-Uploading BackUp File..."
+:delay 30s
+:execute file=$"sftplogbackup" script=$"sftpuploads1"
+:local sftplogbackupresults [/file get [find name="$sftplogbackup.txt"] contents]
+:delay 2s
+:if ($sftplogbackupresults~"finished") do={
+:log info "... Re-Upload BackUp Successfully Uploaded"
+:set $uploadbackupstatus ($uploadbackupstatus-1)
+} 
+:if ($sftplogbackupresults~"^fail") do={
+:log info "... Re-Upload BackUp Failed"
+:delay 2s
+:log info "Prepare for Re-Uploading BackUp File... "
+:log info $uploadbackupstatus
+} else={
+:log info "... Re-Upload BackUp Successfully Uploaded"
+:set $uploadbackupstatus ($uploadbackupstatus-1)
+}}
+:log info "... Sending BackUp File Completed"
+:delay 5s
+
+
+## All BackUp Status
+:delay 2s
+:log info "... All Text and BackUp Files Successfully Uploaded"
+
+
+## Removing Temporary Uploads Files
+:delay 2s
+:log info "... Removing Temporary Files Thats Already Uploaded"
+:delay 5s
+/file remove $sftplogbackup
+/file remove $sftplogtext
+/file remove $backupfile 
+/file remove $textfile
+
+
+## Close BackUp
+:delay 10s
+:log info ".... BackUps Finished by RHDSV=="
+
+### BackUps and Uploads to SFTP Server by RHDSV ===
