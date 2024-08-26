@@ -13,7 +13,7 @@
 ### 7.b. notes:
 ####      - your directory path on sftp server without opening and closing slash
 ####      - if its using subdiretory in a directory just using single slash in between the directory and its sub directory
-###
+####
 ### 8. sftpport ""              				 equals to: sftpport "yoursftpapplicationsserverport"	
 ## In the Generating Backup and Files Sections:
 ### 9. encryption=$"encryptionmethod2" equals to: encryption=$"encryption method you choose between encryptionmethod1 or encryptionmethod2" 
