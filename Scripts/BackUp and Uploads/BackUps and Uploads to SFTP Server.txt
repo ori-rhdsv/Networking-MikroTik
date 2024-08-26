@@ -6,10 +6,10 @@
 ### 1. backuppass "" 	 	                 equals to: backuppass "your backup password"
 ### 2. encryptionmethod1 "aes-sha256"		 equals to: encryptionmethod1 "aes-sha256"	
 ### 3. encryptionmethod2 "rc4" 		 	     equals to: encryptionmethod2 "rc4"
-### 4. sftpuser ""		 	                 equals to: sftpuser "yoursftpuser"
-### 5. sftppassword ""	                 equals to: sftppassword "yoursftppassword"
-### 6. sftpip ""            			       equals to: sftpip "yoursftpserverip"
-### 7.a. sftpdirpath ""		               equals to: sftpdirpath "yoursftpdirectoryorsubdirectorypath"
+### 4. sftpuser ""		 	                 equals to: sftpuser "your sftp user"
+### 5. sftppassword ""	                 equals to: sftppassword "your sftp password"
+### 6. sftpip ""            			       equals to: sftpip "your sftp server ip"
+### 7.a. sftpdirpath ""		               equals to: sftpdirpath "your sftp directory or subdirectory path"
 ### 7.b. notes:
 ####      - your directory path on sftp server without opening and closing slash
 ####      - if its using subdiretory in a directory just using single slash in between the directory and its sub directory
