@@ -4,19 +4,19 @@
 ## For Using This Script Please Customize Using Your Own Params:
 ## In the Variables Sections:
 ### 1. backuppass "" 	 	                 equals to: backuppass "your backup password"
-### 4. encryptionmethod1 "aes-sha256"		 equals to: encryptionmethod1 "aes-sha256"	
-### 5. encryptionmethod2 "rc4" 		 	     equals to: encryptionmethod2 "rc4"
-### 6. sftpuser ""		 	                 equals to: sftpuser "yoursftpuser"
-### 7. sftppassword ""	                 equals to: sftppassword "yoursftppassword"
-### 8. sftpip ""            			       equals to: sftpip "yoursftpserverip"
-### 9.a. sftpdirpath ""		               equals to: sftpdirpath "yoursftpdirectoryorsubdirectorypath"
-### 9.b. notes:
+### 2. encryptionmethod1 "aes-sha256"		 equals to: encryptionmethod1 "aes-sha256"	
+### 3. encryptionmethod2 "rc4" 		 	     equals to: encryptionmethod2 "rc4"
+### 4. sftpuser ""		 	                 equals to: sftpuser "yoursftpuser"
+### 5. sftppassword ""	                 equals to: sftppassword "yoursftppassword"
+### 6. sftpip ""            			       equals to: sftpip "yoursftpserverip"
+### 7.a. sftpdirpath ""		               equals to: sftpdirpath "yoursftpdirectoryorsubdirectorypath"
+### 7.b. notes:
 ####      - your directory path on sftp server without opening and closing slash
 ####      - if its using subdiretory in a directory just using single slash in between the directory and its sub directory
 ###
-### 10. sftpport ""              				 equals to: sftpport "yoursftpapplicationsserverport"	
+### 8. sftpport ""              				 equals to: sftpport "yoursftpapplicationsserverport"	
 ## In the Generating Backup and Files Sections:
-### 11. encryption=$"encryptionmethod2" equals to: encryption=$"encryption method you choose between encryptionmethod1 or encryptionmethod2" 
+### 9. encryption=$"encryptionmethod2" equals to: encryption=$"encryption method you choose between encryptionmethod1 or encryptionmethod2" 
 ## Thats its.
 ## Please feel free to contacts or submit issue if not working or having troubles and would be welcome also if there are any questions:
 ## https://rhdsv.com/contactus
