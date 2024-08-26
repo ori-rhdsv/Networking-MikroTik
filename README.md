@@ -1,2 +1,5 @@
 # Networking-MikroTik
-MikroTik BackUp and Upload to SFTP Server Script With Re-Upload Automations
+Following Folder Contains:
+* BackUps and Uploads:
+  - MikroTik BackUps and Uploads to SFTP Server Script With Re-Uploads Automations
+* ...
