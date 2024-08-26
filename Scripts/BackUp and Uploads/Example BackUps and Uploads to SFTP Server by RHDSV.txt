@@ -13,7 +13,9 @@
 ### 7. sftppassword "textsftppassword"	 	 equals to: sftppassword "your sftp password"
 ### 8. sftpip "10.10.100.200"			 equals to: sftpip "your sftp server ip"
 ### 9.a. sftpdirpath "noc/uploads"		 equals to: sftpdirpath "your directory path on sftp server without opening and closing slash"
-### 9.b. notes: if its using subdiretory in a directory just using single slash in between the directory and its sub directory
+### 9.b. notes:
+####      - your directory path on sftp server without opening and closing slash
+####      - if its using subdiretory in a directory just using single slash in between the directory and its sub directory
 ###
 ### 10. sftpport "22"				 equals to: sftpport "your sftp applications port number on the server"	
 ## In the Generating Backup and Files Sections:
