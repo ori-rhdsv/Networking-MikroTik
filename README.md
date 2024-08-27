@@ -8,4 +8,4 @@ Following Folder Contains:
     - Images:
       - Test Images Files
 
-Please read the MIT License
+Please read the MIT license
