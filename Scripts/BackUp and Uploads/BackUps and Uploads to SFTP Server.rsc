@@ -30,7 +30,7 @@
 add comment="Ori AKA RH" dont-require-permissions=yes name=\
     "BackUps and Uploads to SFTP Server" owner=rh policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="#\
-    ## === BackUps and Uploads to SFTP Server by RHDSV\r\
+    ## === BackUps and Uploads to SFTP Server\r\
     \n\r\
     \n:local systemidentityname [/system identity get name]\r\
     \n:local rosversion [/system resource get version]\r\
@@ -49,7 +49,7 @@ add comment="Ori AKA RH" dont-require-permissions=yes name=\
     \n:local backupdate [/system clock get date]\r\
     \n:local uploadbackupstatus 0\r\
     \n:local uploadtextstatus 0\r\
-    \n:log info \"== Starting BackUps by RHDSV.... \"\r\
+    \n:log info \"== Starting BackUps.... \"\r\
     \n:set textfile (\$\"systemidentityname\" . \"_\" . \$\"backupdate\" . \".\
     rsc\")\r\
     \n:set backupfile (\$\"systemidentityname\" . \"_\" . \$\"backupdate\" .  \
@@ -193,6 +193,6 @@ add comment="Ori AKA RH" dont-require-permissions=yes name=\
     \n\r\
     \n## Close BackUp\r\
     \n:delay 10s\r\
-    \n:log info \".... BackUps Finished by RHDSV==\"\r\
+    \n:log info \".... BackUps Finished==\"\r\
     \n\r\
-    \n### BackUps and Uploads to SFTP Server by RHDSV ==="
+    \n### BackUps and Uploads to SFTP Server ==="
