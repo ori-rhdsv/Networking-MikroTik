@@ -41,7 +41,7 @@
 :local backupdate [/system clock get date]
 :local uploadbackupstatus 0
 :local uploadtextstatus 0
-:log info "== Starting BackUps by RHDSV.... "
+:log info "== Starting BackUps.... "
 :set textfile ($"systemidentityname" . "_" . $"backupdate" . ".rsc")
 :set backupfile ($"systemidentityname" . "_" . $"backupdate" .  ".backup")
 :local sftpuploads1 "/tool fetch upload=yes url=\"sftp://$sftpip/$sftpdirpath/$backupfile\" port=$sftpport user=$sftpuser password=$sftppassword src-path=$backupfile mode=sftp keep-result=no as-value"
@@ -174,6 +174,6 @@
 
 ## Close BackUp
 :delay 10s
-:log info ".... BackUps Finished by RHDSV=="
+:log info ".... BackUps Finished=="
 
 ### BackUps and Uploads to SFTP Server by RHDSV ===
