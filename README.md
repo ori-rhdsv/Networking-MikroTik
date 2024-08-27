@@ -7,6 +7,4 @@ Following Folder Contains:
     - Tested MikroTik BackUps and Uploads to SFTP Server Script With Re-Uploads Automations if Uploading Fails with Images
     - Images:
       - Test Images Files
-
-Its Allowed and Welcome to add, edit, remove and using the codes with whatever you want or suitable with your own env. 
-Please Enjoy and Feel Free.
+Please read the MIT License
